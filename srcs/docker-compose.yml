@@ -1,0 +1,9 @@
+services:
+  mariadb:
+    build: requirements/mariadb
+    secrets:
+      - initfile.sql
+
+secrets:
+  initfile.sql:
+    file: ../secrets/initfile.sql
