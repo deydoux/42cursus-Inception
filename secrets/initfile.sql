@@ -1,3 +1,3 @@
-CREATE USER IF NOT EXISTS deydoux@'%' IDENTIFIED BY 'thisismydeydouxpassword';
-SET PASSWORD FOR deydoux@'%' = PASSWORD('thisismydeydouxpassword');
-GRANT ALL ON *.* TO deydoux@'%' WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS deydoux@localhsot IDENTIFIED BY 'thisismydeydouxpassword';
+SET PASSWORD FOR deydoux@localhsot = PASSWORD('thisismydeydouxpassword');
+GRANT ALL ON *.* TO deydoux@localhsot WITH GRANT OPTION;
