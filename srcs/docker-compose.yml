@@ -3,8 +3,9 @@ services:
   mariadb:
     build:
       context: requirements/mariadb
-      args:
-        ALPINE_VERSION: ${ALPINE_VERSION}
+      <<: &build_args
+        args:
+          ALPINE_VERSION: ${ALPINE_VERSION}
     volumes:
       - $HOME/data/db:/var/lib/mysql
     secrets:
@@ -13,16 +14,14 @@ services:
   nginx:
     build:
       context: requirements/nginx
-      args:
-        ALPINE_VERSION: ${ALPINE_VERSION}
+      <<: *build_args
     depends_on:
       - wordpress
 
   wordpress:
     build:
       context: requirements/wordpress
-      args:
-        ALPINE_VERSION: ${ALPINE_VERSION}
+      <<: *build_args
     depends_on:
       mariadb:
         condition: service_healthy
