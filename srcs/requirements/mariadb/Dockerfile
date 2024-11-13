@@ -5,10 +5,7 @@ RUN apk add --no-cache mariadb mariadb-client
 
 RUN mkdir -p /run/mysqld /var/lib/mysql
 VOLUME ["/var/lib/mysql"]
-
-RUN addgroup -S mariadb
-RUN adduser -S mariadb -G mariadb
-RUN chown mariadb:mariadb /run/mysqld /var/lib/mysql
+RUN chown mysql:mysql /run/mysqld /var/lib/mysql
 
 COPY healthcheck.sh /usr/bin
 HEALTHCHECK --interval=10s --timeout=5s --start-period=1s --retries=3 CMD ["healthcheck.sh"]
