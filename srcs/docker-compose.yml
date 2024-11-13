@@ -15,8 +15,11 @@ services:
     build:
       context: requirements/nginx
       <<: *build_args
-    depends_on:
-      - wordpress
+    ports:
+      - ${HTTPS_PORT}:443
+      - 8080:80
+    # depends_on:
+    #   - wordpress
 
   wordpress:
     build:
