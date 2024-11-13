@@ -7,6 +7,11 @@ services:
     secrets:
       - initfile.sql
 
+  nginx:
+    build: requirements/nginx
+    depends_on:
+      - wordpress
+
   wordpress:
     build: requirements/wordpress
     depends_on:
