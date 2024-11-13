@@ -1,10 +1,17 @@
 services:
+
   mariadb:
     build: requirements/mariadb
     volumes:
       - $HOME/data/db:/var/lib/mysql
     secrets:
       - initfile.sql
+
+  wordpress:
+    build: requirements/wordpress
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
 secrets:
   initfile.sql:
