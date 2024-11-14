@@ -6,8 +6,6 @@ RUN apk add --no-cache nginx
 COPY nginx.conf /etc/nginx
 
 RUN adduser -D -g www www
-RUN mkdir /www
-VOLUME ["/www"]
-RUN chown -R www:www /var/lib/nginx /www
+VOLUME ["/var/www"]
 
 CMD ["nginx"]
