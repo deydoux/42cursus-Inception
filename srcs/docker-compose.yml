@@ -1,11 +1,13 @@
+x-build-args: &build_args
+  args:
+    ALPINE_VERSION: ${ALPINE_VERSION}
+
 services:
 
   mariadb:
     build:
       context: requirements/mariadb
-      <<: &build_args
-        args:
-          ALPINE_VERSION: ${ALPINE_VERSION}
+      <<: *build_args
     volumes:
       - $HOME/data/db:/var/lib/mysql
     secrets:
