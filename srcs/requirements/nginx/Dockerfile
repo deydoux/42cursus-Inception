@@ -10,7 +10,4 @@ RUN mkdir /www
 VOLUME ["/www"]
 RUN chown -R www:www /var/lib/nginx /www
 
-COPY entrypoint.sh /usr/bin
-ENTRYPOINT ["entrypoint.sh"]
-
 CMD ["nginx"]
