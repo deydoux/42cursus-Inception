@@ -21,7 +21,9 @@ services:
       - $HOME/data/wordpress:/var/www
     ports:
       - ${HTTPS_PORT}:443
-      - 8080:80
+    secrets:
+      - cert.key
+      - cert.pem
     # depends_on:
     #   - wordpress
 
@@ -36,5 +38,9 @@ services:
     #     condition: service_healthy
 
 secrets:
+  cert.key:
+    file: ${SECRETS_DIR}/cert.key
+  cert.pem:
+    file: ${SECRETS_DIR}/cert.pem
   initfile.sql:
-    file: ../secrets/initfile.sql
+    file: ${SECRETS_DIR}/initfile.sql
