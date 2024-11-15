@@ -3,6 +3,8 @@ FROM alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache mariadb mariadb-client
 
+COPY my.cnf /etc
+
 RUN mkdir -p /run/mysqld /var/lib/mysql
 VOLUME ["/var/lib/mysql"]
 RUN chown mysql:mysql /run/mysqld /var/lib/mysql
@@ -13,4 +15,4 @@ HEALTHCHECK --interval=10s --timeout=5s --start-period=1s --retries=3 CMD ["heal
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["mariadbd", "--init-file=/run/secrets/initfile.sql", "--skip-networking=0", "--unix-socket=0"]
+CMD ["mariadbd", "--init-file=/run/secrets/initfile.sql"]
