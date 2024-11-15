@@ -27,9 +27,9 @@ services:
     build:
       context: requirements/wordpress
       <<: *build_args
-    depends_on:
-      mariadb:
-        condition: service_healthy
+    # depends_on:
+    #   mariadb:
+    #     condition: service_healthy
 
 secrets:
   initfile.sql:
