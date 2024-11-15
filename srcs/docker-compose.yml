@@ -17,6 +17,8 @@ services:
     build:
       context: requirements/nginx
       <<: *build_args
+    volumes:
+      - $HOME/data/wordpress:/var/www
     ports:
       - ${HTTPS_PORT}:443
       - 8080:80
@@ -27,6 +29,8 @@ services:
     build:
       context: requirements/wordpress
       <<: *build_args
+    volumes:
+      - $HOME/data/wordpress:/var/www
     # depends_on:
     #   mariadb:
     #     condition: service_healthy
