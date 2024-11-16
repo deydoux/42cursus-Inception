@@ -10,7 +10,7 @@ VOLUME ["/var/lib/mysql"]
 RUN chown mysql:mysql /run/mysqld /var/lib/mysql
 
 COPY healthcheck.sh /usr/bin
-HEALTHCHECK --interval=10s --timeout=5s --start-period=1s --retries=3 CMD ["healthcheck.sh"]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["healthcheck.sh"]
 
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]

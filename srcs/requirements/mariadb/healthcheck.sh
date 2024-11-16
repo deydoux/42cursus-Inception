@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ls /run/mysqld/mysqld.sock
+mariadb -u healthcheck -e "SHOW STATUS;"
