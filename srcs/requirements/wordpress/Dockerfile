@@ -15,6 +15,7 @@ php82-intl \
 php82-mysqli \
 php82-pecl-imagick \
 php82-phar \
+php82-tokenizer \
 php82-zip
 
 RUN curl -o /usr/local/bin/wp "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
@@ -28,7 +29,7 @@ VOLUME ["/var/www"]
 WORKDIR /var/www
 
 COPY healthcheck.sh /usr/bin
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 CMD ["healthcheck.sh"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 CMD ["healthcheck.sh"]
 
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]

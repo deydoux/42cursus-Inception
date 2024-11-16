@@ -17,19 +17,23 @@ $(NAME): $(SECRETS)
 	@$(MKDIR) $(DATA)/wordpress
 	$(COMPOSE) up --build
 
-$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql
+$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
 
 $(SECRETS)/cert.key $(SECRETS)/cert.pem:
 	@$(MKDIR) $(@D)
 	$(OPENSSL) req -x509 -newkey rsa:4096 -keyout $(@D)/cert.key -out $(@D)/cert.pem -sha256 -days 397 -nodes -subj "/CN=$(DOMAIN_NAME)"
 
-$(SECRETS)/initfile.sql: $(SECRETS).sample/initfile.sql $(SECRETS)/password_db_root.txt $(SECRETS)/password_db_wordpress.txt $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt
+$(SECRETS)/initfile.sql: $(SECRETS).sample/initfile.sql $(SECRETS)/password_db_root.txt $(SECRETS)/password_db_wordpress.txt
 	@$(MKDIR) $(@D)
 	$(SED) -e "s/%ROOT_PASSWORD/$(shell cat $(word 2, $^))/g" -e "s/%WORDPRESS_PASSWORD/$(shell cat $(word 3, $^))/g" $< > $@
 
 $(SECRETS)/password_%.txt:
 	@$(MKDIR) $(@D)
 	$(OPENSSL) rand -hex 128 > "$@"
+
+$(SECRETS)/redis.conf: $(SECRETS).sample/redis.conf $(SECRETS)/password_redis.txt
+	@$(MKDIR) $(@D)
+	$(SED) -e "s/%REDIS_PASSWORD/$(shell cat $(word 2, $^))/g" $< > $@
 
 clean:
 	$(COMPOSE) down --rmi all -v

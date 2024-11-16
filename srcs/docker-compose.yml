@@ -32,6 +32,15 @@ services:
       wordpress:
         condition: service_healthy
 
+  redis:
+    build:
+      context: requirements/redis
+      <<: *build_args
+    networks:
+      - inception
+    secrets:
+      - redis.conf
+
   wordpress:
     build:
       context: requirements/wordpress
@@ -45,6 +54,7 @@ services:
       - WORDPRESS_TITLE
     secrets:
       - password_db_wordpress.txt
+      - password_redis.txt
       - password_wordpress_deydoux.txt
       - password_wordpress_root.txt
     depends_on:
@@ -78,8 +88,12 @@ secrets:
     file: ${SECRETS_DIR}/initfile.sql
   password_db_wordpress.txt:
     file: ${SECRETS_DIR}/password_db_wordpress.txt
+  password_redis.txt:
+    file: ${SECRETS_DIR}/password_redis.txt
   password_wordpress_deydoux.txt:
     file: ${SECRETS_DIR}/password_wordpress_deydoux.txt
   password_wordpress_root.txt:
     file: ${SECRETS_DIR}/password_wordpress_root.txt
+  redis.conf:
+    file: ${SECRETS_DIR}/redis.conf
 
