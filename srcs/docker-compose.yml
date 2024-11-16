@@ -24,8 +24,9 @@ services:
     secrets:
       - cert.key
       - cert.pem
-    # depends_on:
-    #   - wordpress
+    depends_on:
+      wordpress:
+        condition: service_healthy
 
   wordpress:
     build:
@@ -33,9 +34,16 @@ services:
       <<: *build_args
     volumes:
       - $HOME/data/wordpress:/var/www
-    # depends_on:
-    #   mariadb:
-    #     condition: service_healthy
+    environment:
+      - DOMAIN_NAME
+      - WORDPRESS_TITLE
+    secrets:
+      - password_db_wordpress.txt
+      - password_wordpress_deydoux.txt
+      - password_wordpress_root.txt
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
 secrets:
   cert.key:
@@ -44,3 +52,10 @@ secrets:
     file: ${SECRETS_DIR}/cert.pem
   initfile.sql:
     file: ${SECRETS_DIR}/initfile.sql
+  password_db_wordpress.txt:
+    file: ${SECRETS_DIR}/password_db_wordpress.txt
+  password_wordpress_deydoux.txt:
+    file: ${SECRETS_DIR}/password_wordpress_deydoux.txt
+  password_wordpress_root.txt:
+    file: ${SECRETS_DIR}/password_wordpress_root.txt
+

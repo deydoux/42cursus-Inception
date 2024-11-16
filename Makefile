@@ -20,7 +20,7 @@ $(SECRETS_DIR)/cert.key $(SECRETS_DIR)/cert.pem:
 	@$(MKDIR) $(@D)
 	$(OPENSSL) req -x509 -newkey rsa:4096 -keyout $(@D)/cert.key -out $(@D)/cert.pem -sha256 -days 397 -nodes -subj "/CN=$(DOMAIN_NAME)"
 
-$(SECRETS_DIR)/initfile.sql: $(SECRETS_DIR).sample/initfile.sql $(SECRETS_DIR)/password_db_root.txt $(SECRETS_DIR)/password_db_wordpress.txt
+$(SECRETS_DIR)/initfile.sql: $(SECRETS_DIR).sample/initfile.sql $(SECRETS_DIR)/password_db_root.txt $(SECRETS_DIR)/password_db_wordpress.txt $(SECRETS_DIR)/password_wordpress_deydoux.txt $(SECRETS_DIR)/password_wordpress_root.txt
 	@$(MKDIR) $(@D)
 	$(SED) -e "s/%ROOT_PASSWORD/$(shell cat $(word 2, $^))/g" -e "s/%WORDPRESS_PASSWORD/$(shell cat $(word 3, $^))/g" $< > $@
 
