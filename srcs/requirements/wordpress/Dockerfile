@@ -1,7 +1,21 @@
 ARG ALPINE_VERSION=3.19
 FROM alpine:${ALPINE_VERSION}
 
-RUN apk add --no-cache curl fcgi php82-fpm php82-iconv php82-mysqli php82-phar
+RUN apk add --no-cache \
+curl \
+fcgi \
+php82-curl \
+php82-dom \
+php82-exif \
+php82-fileinfo \
+php82-fpm \
+php82-gd \
+php82-iconv \
+php82-intl \
+php82-mysqli \
+php82-pecl-imagick \
+php82-phar \
+php82-zip
 
 RUN curl -o /usr/local/bin/wp "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 RUN chmod +x /usr/local/bin/wp
