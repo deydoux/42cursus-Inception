@@ -1,3 +1,7 @@
 #!/bin/sh
 
-cgi-fcgi -bind -connect "localhost:9000"
+export REQUEST_METHOD="GET"
+export SCRIPT_FILENAME="/status"
+export SCRIPT_NAME="/status"
+
+cgi-fcgi -bind -connect localhost:9000
