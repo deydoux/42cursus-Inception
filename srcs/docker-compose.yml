@@ -10,6 +10,8 @@ services:
       <<: *build_args
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - inception
     secrets:
       - initfile.sql
 
@@ -19,6 +21,8 @@ services:
       <<: *build_args
     volumes:
       - wordpress:/var/www:ro
+    networks:
+      - inception
     ports:
       - ${HTTPS_PORT}:443
     secrets:
@@ -34,6 +38,8 @@ services:
       <<: *build_args
     volumes:
       - wordpress:/var/www
+    networks:
+      - inception
     environment:
       - DOMAIN_NAME
       - WORDPRESS_TITLE
@@ -58,6 +64,10 @@ volumes:
       type: none
       o: bind
       device: ${HOME}/data/wordpress
+
+networks:
+  inception:
+    driver: bridge
 
 secrets:
   cert.key:
