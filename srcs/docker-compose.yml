@@ -18,7 +18,7 @@ services:
       context: requirements/nginx
       <<: *build_args
     volumes:
-      - $HOME/data/wordpress:/var/www
+      - $HOME/data/wordpress:/var/www:ro
     ports:
       - ${HTTPS_PORT}:443
     secrets:
