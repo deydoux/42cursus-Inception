@@ -14,7 +14,7 @@ VOLUME ["/var/www"]
 WORKDIR /var/www
 
 COPY healthcheck.sh /usr/bin
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD ["healthcheck.sh"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 CMD ["healthcheck.sh"]
 
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]
