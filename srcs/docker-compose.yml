@@ -9,7 +9,7 @@ services:
       context: requirements/mariadb
       <<: *build_args
     volumes:
-      - $HOME/data/db:/var/lib/mysql
+      - db:/var/lib/mysql
     secrets:
       - initfile.sql
 
@@ -18,7 +18,7 @@ services:
       context: requirements/nginx
       <<: *build_args
     volumes:
-      - $HOME/data/wordpress:/var/www:ro
+      - wordpress:/var/www:ro
     ports:
       - ${HTTPS_PORT}:443
     secrets:
@@ -33,7 +33,7 @@ services:
       context: requirements/wordpress
       <<: *build_args
     volumes:
-      - $HOME/data/wordpress:/var/www
+      - wordpress:/var/www
     environment:
       - DOMAIN_NAME
       - WORDPRESS_TITLE
@@ -44,6 +44,20 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/db
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
 
 secrets:
   cert.key:

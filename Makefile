@@ -7,11 +7,14 @@ OPENSSL = openssl
 RM = rm -rf
 SED = sed
 
+DATA = ~/data
 SECRETS = secrets
 
 all: $(NAME)
 
 $(NAME): $(SECRETS)
+	@$(MKDIR) $(DATA)/db
+	@$(MKDIR) $(DATA)/wordpress
 	$(COMPOSE) up --build
 
 $(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql
@@ -30,6 +33,7 @@ $(SECRETS)/password_%.txt:
 
 clean:
 	$(COMPOSE) down --rmi all -v
+	$(RM) $(DATA)
 	$(RM) $(SECRETS)
 
 re: clean all
