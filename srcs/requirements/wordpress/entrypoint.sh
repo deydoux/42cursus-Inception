@@ -7,5 +7,5 @@ if ! wp core is-installed; then
 fi
 
 chown -R www:www .
-sleep infinity
+
 exec $@
