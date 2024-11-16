@@ -9,6 +9,8 @@ SED = sed
 
 SECRETS_DIR = secrets
 
+COMPOSE_COMMANDS = build config create down events images kill logs ls pause ps restart start stats stop top unpause up
+
 all: $(NAME)
 
 $(NAME): $(SECRETS_DIR)
@@ -28,11 +30,13 @@ $(SECRETS_DIR)/password_%.txt:
 	@$(MKDIR) $(@D)
 	$(OPENSSL) rand -hex 128 > "$@"
 
-clean:
+$(COMPOSE_COMMANDS):
+	$(COMPOSE) $@
 
-fclean:
+clean:
+	$(COMPOSE) down --rmi all -v
 	$(RM) $(SECRETS_DIR)
 
-re: fclean all
+re: clean all
 
-.PHONY: all clean fclean re
+.PHONY: all $(NAME) $(COMPOSE_COMMANDS) clean re
