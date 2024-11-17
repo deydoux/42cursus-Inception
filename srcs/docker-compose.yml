@@ -39,6 +39,7 @@ services:
     networks:
       - inception
     secrets:
+      - password_redis.txt
       - redis.conf
 
   wordpress:
@@ -59,6 +60,8 @@ services:
       - password_wordpress_root.txt
     depends_on:
       mariadb:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
 volumes:
