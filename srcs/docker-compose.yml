@@ -110,6 +110,8 @@ secrets:
     file: ${SECRETS_DIR}/password_db_wordpress.txt
   password_redis.txt:
     file: ${SECRETS_DIR}/password_redis.txt
+  password_vsftpd_root.txt:
+    file: ${SECRETS_DIR}/password_vsftpd_root.txt
   password_wordpress_deydoux.txt:
     file: ${SECRETS_DIR}/password_wordpress_deydoux.txt
   password_wordpress_root.txt:
