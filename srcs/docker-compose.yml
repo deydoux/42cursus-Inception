@@ -24,7 +24,7 @@ services:
     networks:
       - inception
     ports:
-      - "${HTTPS_PORT}:443"
+      - "4443:443"
     secrets:
       - cert.key
       - cert.pem
@@ -51,7 +51,7 @@ services:
     networks:
       - inception
     ports:
-      - "21:21"
+      - "2121:2121"
 
   wordpress:
     build:
