@@ -3,4 +3,6 @@ FROM alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache vsftpd
 
+COPY vsftpd.conf /etc/vsftpd
+
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
