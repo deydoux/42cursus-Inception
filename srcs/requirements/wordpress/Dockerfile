@@ -24,8 +24,6 @@ RUN chmod +x /usr/local/bin/wp
 COPY php-fpm.conf /etc/php82
 
 RUN adduser -D -g www www
-
-VOLUME ["/var/www"]
 WORKDIR /var/www
 
 COPY healthcheck.sh /usr/bin

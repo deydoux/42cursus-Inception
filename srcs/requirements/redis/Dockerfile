@@ -3,10 +3,8 @@ FROM alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache redis
 
-VOLUME ["/var/lib/redis"]
-WORKDIR /var/lib/redis
-
 USER redis
+WORKDIR /var/lib/redis
 
 COPY healthcheck.sh /usr/bin
 HEALTHCHECK --interval=30s --timeout=10s --start-period=1s --retries=3 CMD ["healthcheck.sh"]

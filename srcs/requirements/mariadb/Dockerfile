@@ -6,7 +6,6 @@ RUN apk add --no-cache mariadb mariadb-client
 COPY my.cnf /etc
 
 RUN mkdir -p /run/mysqld /var/lib/mysql
-VOLUME ["/var/lib/mysql"]
 RUN chown mysql:mysql /run/mysqld
 
 COPY healthcheck.sh /usr/bin
