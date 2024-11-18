@@ -51,7 +51,8 @@ services:
     networks:
       - inception
     ports:
-      - "2121:2121"
+      - "2020:20"
+      - "2121:21"
     secrets:
       - password_vsftpd_root.txt
 
