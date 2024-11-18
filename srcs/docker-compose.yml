@@ -36,6 +36,8 @@ services:
     build:
       context: requirements/redis
       <<: *build_args
+    volumes:
+      - redis:/var/lib/redis
     networks:
       - inception
     secrets:
@@ -71,6 +73,12 @@ volumes:
       type: none
       o: bind
       device: ${HOME}/data/db
+  redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/redis
   wordpress:
     driver: local
     driver_opts:

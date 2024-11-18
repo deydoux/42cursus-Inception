@@ -14,6 +14,7 @@ all: $(NAME)
 
 $(NAME): $(SECRETS)
 	@$(MKDIR) $(DATA)/db
+	@$(MKDIR) $(DATA)/redis
 	@$(MKDIR) $(DATA)/wordpress
 	$(COMPOSE) up --build
 
