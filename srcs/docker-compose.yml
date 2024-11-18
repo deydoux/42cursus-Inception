@@ -48,6 +48,8 @@ services:
     build:
       context: requirements/vsftpd
       <<: *build_args
+    volumes:
+      - wordpress:/var/lib/ftp
     networks:
       - inception
     ports:
