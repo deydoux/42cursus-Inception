@@ -30,7 +30,7 @@ $(SECRETS)/initfile.sql: $(SECRETS).sample/initfile.sql $(SECRETS)/password_db_r
 
 $(SECRETS)/password_%.txt:
 	@$(MKDIR) $(@D)
-	$(OPENSSL) rand -hex 128 > "$@"
+	$(OPENSSL) rand -hex 64 > "$@"
 
 $(SECRETS)/redis.conf: $(SECRETS).sample/redis.conf $(SECRETS)/password_redis.txt
 	@$(MKDIR) $(@D)
