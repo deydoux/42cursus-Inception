@@ -53,7 +53,6 @@ services:
     networks:
       - inception
     ports:
-      - "20:20"
       - "21:21"
     secrets:
       - password_vsftpd_root.txt
