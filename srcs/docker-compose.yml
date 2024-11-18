@@ -24,7 +24,7 @@ services:
     networks:
       - inception
     ports:
-      - ${HTTPS_PORT}:443
+      - "${HTTPS_PORT}:443"
     secrets:
       - cert.key
       - cert.pem
@@ -43,6 +43,15 @@ services:
     secrets:
       - password_redis.txt
       - redis.conf
+
+  vsftpd:
+    build:
+      context: requirements/vsftpd
+      <<: *build_args
+    networks:
+      - inception
+    ports:
+      - "21:21"
 
   wordpress:
     build:
