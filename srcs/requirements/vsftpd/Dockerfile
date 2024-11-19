@@ -1,11 +1,14 @@
-ARG ALPINE_VERSION=3.19
-FROM alpine:${ALPINE_VERSION}
+FROM debian:oldstable
 
-RUN apk add --no-cache vsftpd
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y vsftpd
 
-COPY vsftpd.conf /etc/vsftpd
+RUN mkdir -p /var/run/vsftpd/empty
+
+COPY vsftpd.conf /etc
 
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+CMD ["vsftpd", "/etc/vsftpd.conf"]

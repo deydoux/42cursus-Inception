@@ -1,29 +1,26 @@
-ARG ALPINE_VERSION=3.19
-FROM alpine:${ALPINE_VERSION}
+FROM debian:oldstable
 
-RUN apk add --no-cache \
-curl \
-fcgi \
-php82-curl \
-php82-dom \
-php82-exif \
-php82-fileinfo \
-php82-fpm \
-php82-gd \
-php82-iconv \
-php82-intl \
-php82-mysqli \
-php82-pecl-imagick \
-php82-phar \
-php82-tokenizer \
-php82-zip
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y \
+	ca-certificates \
+	curl \
+	libfcgi-bin \
+	php-curl \
+	php-gd \
+	php-imagick \
+	php-intl \
+	php-mbstring \
+	php-mysql \
+	php-xml \
+	php-zip \
+	php7.4-fpm
 
 RUN curl -o /usr/local/bin/wp "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 RUN chmod +x /usr/local/bin/wp
 
-COPY php-fpm.conf /etc/php82
+COPY php-fpm.conf /etc/php/7.4/fpm
 
-RUN adduser -D -g www www
 WORKDIR /var/www/wordpress
 
 COPY healthcheck.sh /usr/bin
@@ -32,4 +29,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 CMD ["he
 COPY entrypoint.sh /usr/bin
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["php-fpm82"]
+CMD ["php-fpm7.4"]

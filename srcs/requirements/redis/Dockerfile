@@ -1,7 +1,8 @@
-ARG ALPINE_VERSION=3.19
-FROM alpine:${ALPINE_VERSION}
+FROM debian:oldstable
 
-RUN apk add --no-cache redis
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y redis
 
 USER redis
 WORKDIR /var/lib/redis

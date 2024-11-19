@@ -1,12 +1,13 @@
-ARG ALPINE_VERSION=3.19
-FROM alpine:${ALPINE_VERSION}
+FROM debian:oldstable
 
-RUN apk add --no-cache mariadb mariadb-client
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y mariadb-server
 
-COPY my.cnf /etc
+RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /run/mysqld
 
-RUN mkdir -p /run/mysqld /var/lib/mysql
-RUN chown mysql:mysql /run/mysqld
+COPY mariadb.cnf /etc/mysql
 
 COPY healthcheck.sh /usr/bin
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["healthcheck.sh"]

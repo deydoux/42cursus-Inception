@@ -1,11 +1,9 @@
-ARG ALPINE_VERSION=3.19
-FROM alpine:${ALPINE_VERSION}
+FROM debian:oldstable
 
-RUN apk add --no-cache nginx
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install --no-install-recommends -y nginx
 
 COPY nginx.conf /etc/nginx
-
-RUN adduser -D -g www www
-RUN chown -R www:www /var/lib/nginx
 
 CMD ["nginx"]

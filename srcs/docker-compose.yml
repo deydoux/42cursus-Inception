@@ -1,13 +1,7 @@
-x-build-args: &build_args
-  args:
-    ALPINE_VERSION: ${ALPINE_VERSION}
-
 services:
 
   mariadb:
-    build:
-      context: requirements/mariadb
-      <<: *build_args
+    build: requirements/mariadb
     volumes:
       - db:/var/lib/mysql
     networks:
@@ -16,11 +10,9 @@ services:
       - initfile.sql
 
   nginx:
-    build:
-      context: requirements/nginx
-      <<: *build_args
+    build: requirements/nginx
     volumes:
-      - wordpress:/var/www:ro
+      - wordpress:/var/www/wordpress:ro
     networks:
       - inception
     ports:
@@ -33,9 +25,7 @@ services:
         condition: service_healthy
 
   redis:
-    build:
-      context: requirements/redis
-      <<: *build_args
+    build: requirements/redis
     networks:
       - inception
     secrets:
@@ -43,9 +33,7 @@ services:
       - redis.conf
 
   vsftpd:
-    build:
-      context: requirements/vsftpd
-      <<: *build_args
+    build: requirements/vsftpd
     volumes:
       - wordpress:/var/lib/ftp
     networks:
@@ -53,14 +41,14 @@ services:
     ports:
       - "21:21"
     secrets:
+      - cert.key
+      - cert.pem
       - password_vsftpd_root.txt
 
   wordpress:
-    build:
-      context: requirements/wordpress
-      <<: *build_args
+    build: requirements/wordpress
     volumes:
-      - wordpress:/var/www
+      - wordpress:/var/www/wordpress
     networks:
       - inception
     environment:
