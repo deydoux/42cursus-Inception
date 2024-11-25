@@ -13,8 +13,7 @@ SECRETS = secrets
 all: $(NAME)
 
 $(NAME): $(SECRETS)
-	@$(MKDIR) $(DATA)/db
-	@$(MKDIR) $(DATA)/wordpress
+	@$(MKDIR) $(DATA)/db $(DATA)/wordpress
 	$(COMPOSE) up --build
 
 $(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
@@ -37,8 +36,7 @@ $(SECRETS)/redis.conf: $(SECRETS).sample/redis.conf $(SECRETS)/password_redis.tx
 
 clean:
 	$(COMPOSE) down --rmi all -v
-	$(RM) $(DATA)
-	$(RM) $(SECRETS)
+	$(RM) $(DATA) $(SECRETS)
 
 re: clean all
 
