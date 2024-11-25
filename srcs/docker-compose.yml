@@ -32,19 +32,6 @@ services:
       - password_redis.txt
       - redis.conf
 
-  vsftpd:
-    build: requirements/vsftpd
-    volumes:
-      - wordpress:/var/lib/ftp
-    networks:
-      - inception
-    ports:
-      - "21:21"
-    secrets:
-      - cert.key
-      - cert.pem
-      - password_vsftpd_root.txt
-
   wordpress:
     build: requirements/wordpress
     volumes:
@@ -94,8 +81,6 @@ secrets:
     file: ${SECRETS_DIR}/password_db_wordpress.txt
   password_redis.txt:
     file: ${SECRETS_DIR}/password_redis.txt
-  password_vsftpd_root.txt:
-    file: ${SECRETS_DIR}/password_vsftpd_root.txt
   password_wordpress_deydoux.txt:
     file: ${SECRETS_DIR}/password_wordpress_deydoux.txt
   password_wordpress_root.txt:

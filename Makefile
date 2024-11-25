@@ -18,7 +18,7 @@ $(NAME): $(SECRETS)
 	@$(MKDIR) $(DATA)/wordpress
 	$(COMPOSE) up --build
 
-$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_vsftpd_root.txt $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
+$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
 
 $(SECRETS)/cert.key $(SECRETS)/cert.pem:
 	@$(MKDIR) $(@D)
