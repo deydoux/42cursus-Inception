@@ -8,13 +8,17 @@ RM = rm -rf
 SED = sed
 
 DATA = ~/data
+DATA_DIRS = $(DATA)/db $(DATA)/wordpress
+
 SECRETS = secrets
 
 all: $(NAME)
 
-$(NAME): $(SECRETS)
-	@$(MKDIR) $(DATA)/db $(DATA)/wordpress
+$(NAME): $(DATA_DIRS) $(SECRETS)
 	$(COMPOSE) up --build
+
+$(DATA)/%:
+	$(MKDIR) $@
 
 $(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
 
@@ -34,7 +38,10 @@ $(SECRETS)/redis.conf: $(SECRETS).sample/redis.conf $(SECRETS)/password_redis.tx
 	@$(MKDIR) $(@D)
 	$(SED) -e "s/%REDIS_PASSWORD/$(shell cat $(word 2, $^))/g" $< > $@
 
-clean:
+clean: $(DATA_DIRS) $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
+	$(COMPOSE) stop
+	$(COMPOSE) run --entrypoint "" --no-deps --rm wordpress sh -c "rm -rf /var/www/wordpress; chmod 777 /var/www/wordpress"
+	$(COMPOSE) run --entrypoint "" --no-deps --rm mariadb sh -c "rm -rf /var/lib/mysql; chmod 777 /var/lib/mysql"
 	$(COMPOSE) down --rmi all -v
 	$(RM) $(DATA) $(SECRETS)
 
