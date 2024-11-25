@@ -47,7 +47,7 @@ services:
       context: requirements/wordpress
       <<: *build_args
     volumes:
-      - wordpress:/var/www
+      - wordpress:/var/www/wordpress
     networks:
       - inception
     environment:
