@@ -4,6 +4,15 @@ x-build-args: &build_args
 
 services:
 
+  adminer:
+    build:
+      context: requirements/adminer
+      <<: *build_args
+    volumes:
+      - adminer:/var/www/adminer
+    networks:
+      - inception
+
   mariadb:
     build:
       context: requirements/mariadb
@@ -20,15 +29,19 @@ services:
       context: requirements/nginx
       <<: *build_args
     volumes:
-      - wordpress:/var/www:ro
+      - adminer:/var/www/adminer:ro
+      - wordpress:/var/www/wordpress:ro
     networks:
       - inception
     ports:
       - "443:443"
+      - "8080:8080"
     secrets:
       - cert.key
       - cert.pem
     depends_on:
+      adminer:
+        condition: service_healthy
       wordpress:
         condition: service_healthy
 
@@ -65,6 +78,12 @@ services:
         condition: service_healthy
 
 volumes:
+  adminer:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/adminer
   db:
     driver: local
     driver_opts:

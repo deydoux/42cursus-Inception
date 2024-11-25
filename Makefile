@@ -8,7 +8,7 @@ RM = rm -rf
 SED = sed
 
 DATA = ~/data
-DATA_DIRS = $(DATA)/db $(DATA)/wordpress
+DATA_DIRS = $(DATA)/adminer $(DATA)/db $(DATA)/wordpress
 
 SECRETS = secrets
 
