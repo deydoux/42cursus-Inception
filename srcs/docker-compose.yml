@@ -38,7 +38,6 @@ services:
       - inception
     ports:
       - "443:443"
-      - "8080:8080"
     secrets:
       - cert.key
       - cert.pem
