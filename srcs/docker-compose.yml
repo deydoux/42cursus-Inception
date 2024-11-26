@@ -30,8 +30,6 @@ services:
       - cert.key
       - cert.pem
     depends_on:
-      adminer:
-        condition: service_started
       wordpress:
         condition: service_healthy
 
@@ -55,16 +53,6 @@ services:
       mariadb:
         condition: service_healthy
       redis:
-        condition: service_healthy
-
-  adminer:
-    build:
-      context: requirements/bonus/adminer
-      <<: *build_args
-    networks:
-      - inception
-    depends_on:
-      mariadb:
         condition: service_healthy
 
   redis:
