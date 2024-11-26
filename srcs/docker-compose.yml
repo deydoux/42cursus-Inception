@@ -4,15 +4,6 @@ x-build-args: &build_args
 
 services:
 
-  adminer:
-    build:
-      context: requirements/adminer
-      <<: *build_args
-    volumes:
-      - adminer:/var/www/adminer
-    networks:
-      - inception
-
   mariadb:
     build:
       context: requirements/mariadb
@@ -29,7 +20,6 @@ services:
       context: requirements/nginx
       <<: *build_args
     volumes:
-      - adminer:/var/www/adminer:ro
       - wordpress:/var/www:ro
     networks:
       - inception
@@ -41,19 +31,9 @@ services:
       - cert.pem
     depends_on:
       adminer:
-        condition: service_healthy
+        condition: service_started
       wordpress:
         condition: service_healthy
-
-  redis:
-    build:
-      context: requirements/redis
-      <<: *build_args
-    networks:
-      - inception
-    secrets:
-      - password_redis.txt
-      - redis.conf
 
   wordpress:
     build:
@@ -77,13 +57,27 @@ services:
       redis:
         condition: service_healthy
 
-volumes:
   adminer:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/data/adminer
+    build:
+      context: requirements/bonus/adminer
+      <<: *build_args
+    networks:
+      - inception
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  redis:
+    build:
+      context: requirements/bonus/redis
+      <<: *build_args
+    networks:
+      - inception
+    secrets:
+      - password_redis.txt
+      - redis.conf
+
+volumes:
   db:
     driver: local
     driver_opts:
