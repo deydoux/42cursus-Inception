@@ -40,7 +40,7 @@ $(SECRETS)/redis.conf: $(SECRETS).sample/redis.conf $(SECRETS)/password_redis.tx
 
 clean: $(DATA_DIRS) $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
 	$(COMPOSE) stop
-	$(COMPOSE) run --entrypoint "" --no-deps --rm wordpress $(RM) /var/www/wordpress || true
+	$(COMPOSE) run --entrypoint "" --no-deps --rm wordpress $(RM) /var/www || true
 	$(COMPOSE) run --entrypoint "" --no-deps --rm mariadb $(RM) /var/lib/mysql || true
 	$(COMPOSE) down --rmi all -v
 	$(RM) $(DATA) $(SECRETS)

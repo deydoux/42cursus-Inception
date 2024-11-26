@@ -30,7 +30,7 @@ services:
       <<: *build_args
     volumes:
       - adminer:/var/www/adminer:ro
-      - wordpress:/var/www/wordpress:ro
+      - wordpress:/var/www:ro
     networks:
       - inception
     ports:
@@ -60,7 +60,7 @@ services:
       context: requirements/wordpress
       <<: *build_args
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www
     networks:
       - inception
     environment:
