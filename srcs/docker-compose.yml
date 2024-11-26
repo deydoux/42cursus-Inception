@@ -4,6 +4,18 @@ x-build-args: &build_args
 
 services:
 
+  adminer:
+    build:
+      context: requirements/bonus/adminer
+      <<: *build_args
+    volumes:
+      - adminer:/var/www/adminer
+    networks:
+      - inception
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
   mariadb:
     build:
       context: requirements/mariadb
@@ -20,7 +32,8 @@ services:
       context: requirements/nginx
       <<: *build_args
     volumes:
-      - wordpress:/var/www:ro
+      - adminer:/var/www/adminer:ro
+      - wordpress:/var/www/wordpress:ro
     networks:
       - inception
     ports:
@@ -30,15 +43,27 @@ services:
       - cert.key
       - cert.pem
     depends_on:
+      adminer:
+        condition: service_healthy
       wordpress:
         condition: service_healthy
+
+  redis:
+    build:
+      context: requirements/bonus/redis
+      <<: *build_args
+    networks:
+      - inception
+    secrets:
+      - password_redis.txt
+      - redis.conf
 
   wordpress:
     build:
       context: requirements/wordpress
       <<: *build_args
     volumes:
-      - wordpress:/var/www
+      - wordpress:/var/www/wordpress
     networks:
       - inception
     environment:
@@ -55,29 +80,28 @@ services:
       redis:
         condition: service_healthy
 
-  redis:
-    build:
-      context: requirements/bonus/redis
-      <<: *build_args
-    networks:
-      - inception
-    secrets:
-      - password_redis.txt
-      - redis.conf
-
 volumes:
+
   db:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ${HOME}/data/db
+
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ${HOME}/data/wordpress
+
+  adminer:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/adminer
 
 networks:
   inception:

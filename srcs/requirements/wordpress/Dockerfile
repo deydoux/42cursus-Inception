@@ -23,7 +23,7 @@ RUN chmod +x /usr/local/bin/wp
 
 COPY php-fpm.conf /etc/php82
 
-WORKDIR /var/www
+WORKDIR /var/www/wordpress
 
 COPY healthcheck.sh /usr/bin
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 CMD ["healthcheck.sh"]
