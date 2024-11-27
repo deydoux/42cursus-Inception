@@ -1,3 +1,8 @@
+x-service: &service
+  networks:
+    - inception
+  restart: on-failure
+
 x-build-args: &build_args
   args:
     ALPINE_VERSION: ${ALPINE_VERSION}
@@ -10,11 +15,10 @@ services:
       <<: *build_args
     volumes:
       - adminer:/var/www/adminer
-    networks:
-      - inception
     depends_on:
       mariadb:
         condition: service_healthy
+    <<: *service
 
   mariadb:
     build:
@@ -22,10 +26,9 @@ services:
       <<: *build_args
     volumes:
       - db:/var/lib/mysql
-    networks:
-      - inception
     secrets:
       - initfile.sql
+    <<: *service
 
   nginx:
     build:
@@ -34,8 +37,6 @@ services:
     volumes:
       - adminer:/var/www/adminer:ro
       - wordpress:/var/www/wordpress:ro
-    networks:
-      - inception
     ports:
       - "443:443"
     secrets:
@@ -46,6 +47,7 @@ services:
         condition: service_healthy
       wordpress:
         condition: service_healthy
+    <<: *service
 
   proftpd:
     build:
@@ -53,8 +55,6 @@ services:
       <<: *build_args
     volumes:
       - wordpress:/var/lib/ftp
-    networks:
-      - inception
     ports:
       - "21:21"
     secrets:
@@ -62,16 +62,16 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
+    <<: *service
 
   redis:
     build:
       context: requirements/bonus/redis
       <<: *build_args
-    networks:
-      - inception
     secrets:
       - password_redis.txt
       - redis.conf
+    <<: *service
 
   wordpress:
     build:
@@ -79,8 +79,6 @@ services:
       <<: *build_args
     volumes:
       - wordpress:/var/www/wordpress
-    networks:
-      - inception
     environment:
       - DOMAIN_NAME
       - WORDPRESS_TITLE
@@ -94,6 +92,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    <<: *service
 
 volumes:
 
