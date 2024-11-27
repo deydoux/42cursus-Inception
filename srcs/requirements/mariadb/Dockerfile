@@ -4,7 +4,7 @@ FROM alpine:${ALPINE_VERSION}
 RUN apk add --no-cache mariadb mariadb-client
 
 RUN mkdir -p /run/mysqld
-RUN chown -R mysql:mysql /run/mysqld
+RUN chown -R mysql: /run/mysqld
 
 COPY my.cnf /etc
 

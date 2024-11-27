@@ -11,5 +11,5 @@ if ! wp core is-installed 2>/dev/null; then
 	wp plugin activate redis-cache
 	wp redis enable
 fi
-chown -R nobody:nobody .
+chown -R nobody: .
 exec $@
