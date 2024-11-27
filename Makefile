@@ -20,7 +20,7 @@ $(NAME): $(DATA_DIRS) $(SECRETS)
 $(DATA)/%:
 	$(MKDIR) $@
 
-$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_ftp_root.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
+$(SECRETS): $(SECRETS)/cert.key $(SECRETS)/cert.pem $(SECRETS)/initfile.sql $(SECRETS)/password_proftpd_root.txt $(SECRETS)/password_wordpress_deydoux.txt $(SECRETS)/password_wordpress_root.txt $(SECRETS)/redis.conf
 
 $(SECRETS)/cert.key $(SECRETS)/cert.pem:
 	@$(MKDIR) $(@D)

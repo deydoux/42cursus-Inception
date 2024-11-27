@@ -16,19 +16,6 @@ services:
       mariadb:
         condition: service_healthy
 
-  ftp:
-    build:
-      context: requirements/bonus/ftp
-      <<: *build_args
-    volumes:
-      - wordpress:/var/lib/ftp
-    networks:
-      - inception
-    ports:
-      - "21:21"
-    secrets:
-      - password_ftp_root.txt
-
   mariadb:
     build:
       context: requirements/mariadb
@@ -59,6 +46,19 @@ services:
         condition: service_healthy
       wordpress:
         condition: service_healthy
+
+  proftpd:
+    build:
+      context: requirements/bonus/proftpd
+      <<: *build_args
+    volumes:
+      - wordpress:/var/lib/ftp
+    networks:
+      - inception
+    ports:
+      - "21:21"
+    secrets:
+      - password_proftpd_root.txt
 
   redis:
     build:
@@ -128,8 +128,8 @@ secrets:
     file: ${SECRETS_DIR}/initfile.sql
   password_db_wordpress.txt:
     file: ${SECRETS_DIR}/password_db_wordpress.txt
-  password_ftp_root.txt:
-    file: ${SECRETS_DIR}/password_ftp_root.txt
+  password_proftpd_root.txt:
+    file: ${SECRETS_DIR}/password_proftpd_root.txt
   password_redis.txt:
     file: ${SECRETS_DIR}/password_redis.txt
   password_wordpress_deydoux.txt:
