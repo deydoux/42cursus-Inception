@@ -59,6 +59,9 @@ services:
       - "21:21"
     secrets:
       - password_proftpd_root.txt
+    depends_on:
+      wordpress:
+        condition: service_healthy
 
   redis:
     build:
