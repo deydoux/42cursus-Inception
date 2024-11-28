@@ -53,6 +53,8 @@ services:
     build:
       context: requirements/bonus/ollama
       <<: *build_args
+    volumes:
+      - ollama:/root/.ollama
     <<: *service
 
   proftpd:
@@ -102,6 +104,13 @@ services:
 
 volumes:
 
+  adminer:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/adminer
+
   db:
     driver: local
     driver_opts:
@@ -109,19 +118,19 @@ volumes:
       o: bind
       device: ${HOME}/data/db
 
+  ollama:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/ollama
+
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ${HOME}/data/wordpress
-
-  adminer:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/data/adminer
 
 networks:
   inception:

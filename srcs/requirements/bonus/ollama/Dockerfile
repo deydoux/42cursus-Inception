@@ -13,4 +13,4 @@ COPY --from=download ollama-linux-amd64.tgz ollama-linux-amd64.tgz
 RUN tar -C /usr -xzf ollama-linux-amd64.tgz
 RUN rm ollama-linux-amd64.tgz
 
-CMD ["sleep", "infinity"]
+CMD ["ollama", "serve"]
