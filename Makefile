@@ -8,7 +8,11 @@ RM = rm -rf
 SED = sed
 
 DATA = ~/data
-DATA_DIRS = $(DATA)/adminer $(DATA)/db $(DATA)/wordpress
+DATA_DIRS = \
+	$(DATA)/adminer \
+	$(DATA)/db \
+	$(DATA)/ollama \
+	$(DATA)/wordpress
 
 SECRETS = secrets
 
@@ -43,6 +47,7 @@ clean: $(DATA_DIRS) $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydou
 	$(COMPOSE) run --entrypoint "" --no-deps --rm wordpress $(RM) /var/www/wordpress || true
 	$(COMPOSE) run --entrypoint "" --no-deps --rm adminer $(RM) /var/www/adminer || true
 	$(COMPOSE) run --entrypoint "" --no-deps --rm mariadb $(RM) /var/lib/mysql || true
+	$(COMPOSE) run --entrypoint "" --no-deps --rm ollama $(RM) /root/.ollama || true
 	$(COMPOSE) down --rmi all -v
 	$(RM) $(DATA) $(SECRETS)
 
