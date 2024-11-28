@@ -49,6 +49,12 @@ services:
         condition: service_healthy
     <<: *service
 
+  ollama:
+    build:
+      context: requirements/bonus/ollama
+      <<: *build_args
+    <<: *service
+
   proftpd:
     build:
       context: requirements/bonus/proftpd
