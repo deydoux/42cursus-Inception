@@ -6,18 +6,18 @@
 	<title>Inception Chat</title>
 </head>
 <body>
-	<ol id="conversation">
-		<li>Explain how cows lay eggs?</li>
-		<li>
+	<div id="conversation">
+		<div class="message">Explain how cows lay eggs?</div>
+		<div class="message">
 			Cows do not lay eggs. Cows are mammals, which means they give birth to live young instead of laying eggs like birds. Female cows have a reproductive system that includes a uterus, ovaries, and a placenta, where their developing calves grow and receive nutrients.<br>
 			<br>
 			Birds, on the other hand, have a reproductive system specifically designed for laying eggs. The female bird has ovaries that produce eggs, which are then laid through a process called oviposition.<br>
 			<br>
 			So, to clarify, cows do not lay eggs. If you're thinking of an animal that lays eggs, it's likely a bird or another type of egg-laying creature.<br>
-		</li>
-	</ol>
+		</div>
+	</div>
 	<form id="compose">
-		<input id="message" type="text">
+		<input id="prompt" type="text" required>
 		<input type="submit" value="Send">
 	</form>
 	<script src="script.js"></script>
