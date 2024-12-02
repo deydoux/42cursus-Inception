@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<link href="style.css" rel="stylesheet" type="text/css">
+	<link href="style.css" rel="stylesheet">
 	<title>Inception Chat</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
 </head>
+
 <body>
-	<div id="conversation">
-		<div class="message">Explain how cows lay eggs?</div>
-		<div class="message">
-			Cows do not lay eggs. Cows are mammals, which means they give birth to live young instead of laying eggs like birds. Female cows have a reproductive system that includes a uterus, ovaries, and a placenta, where their developing calves grow and receive nutrients.<br>
-			<br>
-			Birds, on the other hand, have a reproductive system specifically designed for laying eggs. The female bird has ovaries that produce eggs, which are then laid through a process called oviposition.<br>
-			<br>
-			So, to clarify, cows do not lay eggs. If you're thinking of an animal that lays eggs, it's likely a bird or another type of egg-laying creature.<br>
-		</div>
+	<div id="main-wrap">
+		<main>
+			<nav>
+				<h1>Inception Chat</h1>
+				<div id="model-select">
+					<label>Model</label>
+					<input type="text" list="model-list" required>
+					<datalist id="model-list">
+						<option value="llama3.2">Llama 3.2 (3B)</option>
+						<option value="llama3.2:1b">Llama 3.2 (1B)</option>
+					</datalist>
+				</div>
+			</nav>
+			<div id="conversation">
+				<div class="message">Explain how cows lay eggs?</div>
+				<div class="message">
+					Cows do not lay eggs. Cows are mammals, which means they give birth to live young instead of laying
+					eggs like birds. Female cows have a reproductive system that includes a uterus, ovaries, and a
+					placenta, where their developing calves grow and receive nutrients.<br>
+					<br>
+					Birds, on the other hand, have a reproductive system specifically designed for laying eggs. The
+					female bird has ovaries that produce eggs, which are then laid through a process called
+					oviposition.<br>
+					<br>
+					So, to clarify, cows do not lay eggs. If you're thinking of an animal that lays eggs, it's likely a
+					bird or another type of egg-laying creature.<br>
+				</div>
+			</div>
+			<form id="compose">
+				<textarea id="prompt"></textarea>
+				<input type="submit" value="Send">
+			</form>
+		</main>
 	</div>
-	<form id="compose">
-		<input id="prompt" type="text" required>
-		<input type="submit" value="Send">
-	</form>
 	<script src="script.js"></script>
 </body>
+
 </html>
