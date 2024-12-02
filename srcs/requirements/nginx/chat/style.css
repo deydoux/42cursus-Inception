@@ -8,6 +8,10 @@ body {
 	font-family: "Poppins", sans-serif;
 }
 
+input, textarea {
+	border: none;
+}
+
 #main-wrap {
 	display: flex;
 	justify-content: center;
@@ -15,7 +19,8 @@ body {
 
 main {
 	height: 100vh;
-	width: 960px;
+	width: 100%;
+	max-width: 960px;
 }
 
 nav {
@@ -37,6 +42,9 @@ nav h1 {
 
 #model-select input {
 	width: 128px;
+	padding: 0 8px;
+	border-radius: 8px;
+	background: #f2f2f2;
 }
 
 #model-select a {
@@ -44,6 +52,19 @@ nav h1 {
 	display: flex;
 }
 
+#conversation {
+	height: 75%;
+}
+
+#composer {
+	margin-top: 32px;
+	display: flex;
+	background: #f2f2f2;
+}
+
 #prompt {
+	width: 100%;
 	resize: none;
+	outline: none;
+	background: #f2f2f2;
 }
