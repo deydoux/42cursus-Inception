@@ -68,6 +68,10 @@ nav h1 {
 	background: #f2f2f2;
 }
 
+.response {
+	padding: 0 32px;
+}
+
 #composer {
 	height: 128px;
 	border-radius: 32px 32px 0 0;
