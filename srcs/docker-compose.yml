@@ -45,6 +45,8 @@ services:
     depends_on:
       adminer:
         condition: service_healthy
+      ollama:
+        condition: service_healthy
       wordpress:
         condition: service_healthy
     <<: *service
