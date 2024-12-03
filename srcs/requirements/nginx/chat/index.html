@@ -15,7 +15,7 @@
 		<nav>
 			<h1>Inception Chat</h1>
 			<div id="model-select">
-				<input type="text" value="llama3.2" placeholder="Select model" list="model-list" required>
+				<input id="model-input" type="text" value="llama3.2" placeholder="Select model" list="model-list" required>
 				<datalist id="model-list">
 					<option value="gemma:2b">Gemma — 2B</option>
 					<option value="llama3.2:1b">Llama 3.2 — 1B</option>
@@ -47,9 +47,15 @@
 		<div id="composer">
 			<textarea
 				id="prompt">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, quis sit repudiandae ipsa delectus maxime saepe enim laborum voluptas laboriosam repellendus. Qui, dolorum. Velit magnam ipsam voluptates architecto, vitae quasi!</textarea>
-			<button type="submit" id="send-button">
+			<button id="send-button" type="submit">
 				<img src="icons/send.svg">
 			</button>
+		</div>
+		<div id="modal">
+			<div id="modal-content">
+				<h1 id="modal-title"></h1>
+				<p id="modal-info"></p>
+			</div>
 		</div>
 	</main>
 	<script src="script.js"></script>

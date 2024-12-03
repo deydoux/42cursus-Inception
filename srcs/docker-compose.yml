@@ -37,6 +37,7 @@ services:
     volumes:
       - adminer:/var/www/adminer:ro
       - wordpress:/var/www/wordpress:ro
+      - ./requirements/nginx/chat:/var/www/chat
     ports:
       - "443:443"
     secrets:

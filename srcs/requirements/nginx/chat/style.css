@@ -11,6 +11,10 @@ body {
 	font-family: "Poppins", sans-serif;
 }
 
+h1 {
+	font-size: 24px;
+}
+
 button, input, textarea {
 	border: none;
 }
@@ -30,16 +34,12 @@ nav {
 	align-items: center;
 }
 
-nav h1 {
-	font-size: 24px;
-}
-
 #model-select {
 	display: flex;
 	gap: 8px;
 }
 
-#model-select input {
+#model-input {
 	width: 128px;
 	padding: 0 8px;
 	border-radius: 8px;
@@ -100,4 +100,32 @@ nav h1 {
 
 #send-button:hover {
 	cursor: pointer;
+}
+
+#modal {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+#modal-content {
+	width: fit-content;
+	max-width: 25%;
+	padding: 24px 32px;
+	border-radius: 16px;
+	background: #f2f2f2;
+}
+
+#modal-title {
+	margin-bottom: 8px;
+}
+
+#modal-info::first-letter {
+	text-transform: uppercase;
 }
