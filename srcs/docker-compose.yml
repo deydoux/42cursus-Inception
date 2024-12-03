@@ -3,7 +3,7 @@ x-service: &service
     - inception
   restart: on-failure
 
-x-build-args: &build_args
+x-build-args: &alpine_build_args
   args:
     ALPINE_VERSION: ${ALPINE_VERSION}
 
@@ -12,7 +12,7 @@ services:
   adminer:
     build:
       context: requirements/bonus/adminer
-      <<: *build_args
+      <<: *alpine_build_args
     volumes:
       - adminer:/var/www/adminer
     depends_on:
@@ -23,7 +23,7 @@ services:
   mariadb:
     build:
       context: requirements/mariadb
-      <<: *build_args
+      <<: *alpine_build_args
     volumes:
       - db:/var/lib/mysql
     secrets:
@@ -33,7 +33,7 @@ services:
   nginx:
     build:
       context: requirements/nginx
-      <<: *build_args
+      <<: *alpine_build_args
     volumes:
       - adminer:/var/www/adminer:ro
       - wordpress:/var/www/wordpress:ro
@@ -52,19 +52,15 @@ services:
     <<: *service
 
   ollama:
-    build:
-      context: requirements/bonus/ollama
-      <<: *build_args
+    build: requirements/bonus/ollama
     volumes:
       - ollama:/root/.ollama
-    ports:
-      - "11434:11434"
     <<: *service
 
   proftpd:
     build:
       context: requirements/bonus/proftpd
-      <<: *build_args
+      <<: *alpine_build_args
     volumes:
       - wordpress:/var/lib/ftp
     ports:
@@ -79,7 +75,7 @@ services:
   redis:
     build:
       context: requirements/bonus/redis
-      <<: *build_args
+      <<: *alpine_build_args
     secrets:
       - password_redis.txt
       - redis.conf
@@ -88,7 +84,7 @@ services:
   wordpress:
     build:
       context: requirements/wordpress
-      <<: *build_args
+      <<: *alpine_build_args
     volumes:
       - wordpress:/var/www/wordpress
     environment:

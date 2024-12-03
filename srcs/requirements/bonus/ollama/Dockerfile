@@ -11,4 +11,5 @@ RUN rm ollama-linux-amd64.tgz
 COPY healthcheck.sh /usr/bin
 HEALTHCHECK --interval=30s --timeout=10s --start-period=1s --retries=3 CMD ["healthcheck.sh"]
 
+ENV OLLAMA_HOST 0.0.0.0:11434
 CMD ["ollama", "serve"]
