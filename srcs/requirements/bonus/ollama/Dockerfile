@@ -5,7 +5,7 @@ RUN apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends ca-certificates curl
 
 RUN curl -LO https://ollama.com/download/ollama-linux-amd64.tgz
-RUN tar -C /usr -xzf ollama-linux-amd64.tgz
+RUN tar -C /usr -xvf ollama-linux-amd64.tgz
 RUN rm ollama-linux-amd64.tgz
 
 COPY healthcheck.sh /usr/bin
