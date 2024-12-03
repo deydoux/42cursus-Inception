@@ -129,3 +129,13 @@ nav {
 #modal-info::first-letter {
 	text-transform: uppercase;
 }
+
+#modal-progress-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+#modal-progress {
+	width: 75%;
+	padding-top: 24px;
+}

@@ -10,10 +10,24 @@ function showModal(status) {
 	document.getElementById("modal").style.display = status ? "flex" : "none";
 }
 
+function setModalProgress(value, max) {
+	const progress = document.getElementById("modal-progress");
+	if (value < 0)
+		progress.removeAttribute("value");
+	else
+		progress.value = value;
+	progress.max = max;
+}
+
+function showModalProgress(status) {
+	document.getElementById("modal-progress").style.display = status ? "" : "none";
+}
+
 function pullModel(modelName) {
 	return (new Promise(async resolve => {
 		setModalTitle(`Pulling ${modelName} model`);
 		showModal(true);
+		showModalProgress(true);
 		const body = JSON.stringify({ model: modelName });
 		const response = await fetch("/ollama/api/pull", { method: "POST", body });
 		const reader = response.body.getReader();
@@ -31,9 +45,12 @@ function pullModel(modelName) {
 			.map(line => JSON.parse(line));
 			for (const data of datas) {
 				setModalInfo(data.status || `Error: ${data.error}`)
-				console.log(data);
-				if (data.status === "success")
+				if (!data.status)
+					showModalProgress(false);
+				else if (data.status === "success")
 					success = true;
+				setModalProgress(data.completed || -1, data.total || 0);
+				console.log(data);
 			}
 		}
 
