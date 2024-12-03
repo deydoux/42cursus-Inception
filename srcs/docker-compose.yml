@@ -55,6 +55,8 @@ services:
       <<: *build_args
     volumes:
       - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
     <<: *service
 
   proftpd:
