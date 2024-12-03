@@ -24,10 +24,11 @@ function showModalProgress(status) {
 }
 
 function pullModel(modelName) {
+	setModalTitle(`Pulling ${modelName} model`);
+	showModal(true);
+	showModalProgress(true);
+
 	return (new Promise(async resolve => {
-		setModalTitle(`Pulling ${modelName} model`);
-		showModal(true);
-		showModalProgress(true);
 		const body = JSON.stringify({ model: modelName });
 		const response = await fetch("/ollama/api/pull", { method: "POST", body });
 		const reader = response.body.getReader();
@@ -40,9 +41,10 @@ function pullModel(modelName) {
 				break ;
 
 			const datas = decoder.decode(value, { stream: true })
-			.trim()
-			.split('\n')
-			.map(line => JSON.parse(line));
+				.trim()
+				.split('\n')
+				.map(line => JSON.parse(line));
+
 			for (const data of datas) {
 				setModalInfo(data.status || `Error: ${data.error}`)
 				if (!data.status)
@@ -76,8 +78,8 @@ function checkModel(modelName) {
 }
 
 function getModelName() {
-	const modelName = document.getElementById("model-input").value;
-	if (!modelName.indexOf(':') < 0)
+	let modelName = document.getElementById("model-input").value;
+	if (modelName.indexOf(':') < 0)
 		modelName += ":latest";
 	return (modelName);
 }
