@@ -10,12 +10,27 @@ function showModal(status) {
 	document.getElementById("modal").style.display = status ? "flex" : "none";
 }
 
+function formatSize(size, decimals = 1) {
+	const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+	for (let i = 0; size >= 1024 && i < units.length - 1; i++)
+		size /= 1024
+	return (`${size.toFixed(decimals)} ${units[i]}`);
+}
+
 function setModalProgress(value, max) {
+	const valueElem = document.getElementById("modal-progress-value");
 	const progress = document.getElementById("modal-progress");
-	if (value < 0)
+	const maxElem = document.getElementById("modal-progress-max");
+
+	if (value < 0) {
+		valueElem.innerText = "";
 		progress.removeAttribute("value");
-	else
+		maxElem.innerText = "";
+	} else {
+		valueElem.innerText = formatSize(value);
 		progress.value = value;
+		maxElem.innerText = formatSize(max);
+	}
 	progress.max = max;
 }
 
@@ -52,7 +67,6 @@ function pullModel(modelName) {
 				else if (data.status === "success")
 					success = true;
 				setModalProgress(data.completed || -1, data.total || 0);
-				console.log(data);
 			}
 		}
 
