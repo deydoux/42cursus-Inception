@@ -1,7 +1,7 @@
 ARG ALPINE_VERSION=3.19
 FROM alpine:${ALPINE_VERSION}
 
-RUN apk add --no-cache proftpd
+RUN apk add --no-cache proftpd proftpd-mod_tls
 
 RUN mkdir -p /run/proftpd
 

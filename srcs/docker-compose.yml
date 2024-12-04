@@ -66,10 +66,9 @@ services:
     ports:
       - "21:21"
     secrets:
+      - cert.key
+      - cert.pem
       - password_proftpd_root.txt
-    depends_on:
-      wordpress:
-        condition: service_healthy
     <<: *service
 
   redis:
