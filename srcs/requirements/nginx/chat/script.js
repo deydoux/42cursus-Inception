@@ -169,18 +169,25 @@ async function send() {
 	if (generating)
 		return ;
 
-	const prompt = getPromptValue();
-	if (!prompt)
-		return ;
-
 	const model = getModelName();
 	if (!(await checkModel(model)))
+		return ;
+
+	const prompt = getPromptValue();
+	if (!prompt)
 		return ;
 
 	generate(model, prompt);
 }
 
+document.getElementById("prompt").addEventListener("keydown", event => {
+	if (event.key !== "Enter" || event.shiftKey)
+		return ;
+	event.preventDefault();
+	send();
+});
+
 document.getElementById("send-button").addEventListener("click", event => {
 	event.preventDefault();
 	send();
-})
+});
