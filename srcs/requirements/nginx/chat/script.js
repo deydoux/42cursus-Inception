@@ -1,3 +1,19 @@
+function getPromptValue() {
+	const prompt = document.getElementById("prompt");
+
+	const value = prompt.value;
+	prompt.value = "";
+	if (!value)
+		return ;
+
+	const message = document.createElement("div");
+	message.className = "message";
+	message.innerText = value;
+	document.getElementById("conversation").appendChild(message);
+
+	return (value);
+}
+
 function setModalTitle(title) {
 	document.getElementById("modal-title").innerText = title;
 }
@@ -12,8 +28,12 @@ function showModal(status) {
 
 function formatSize(size, decimals = 1) {
 	const units = ["B", "KB", "MB", "GB", "TB", "PB"];
-	for (let i = 0; size >= 1024 && i < units.length - 1; i++)
+
+	let i = 0;
+	while (size >= 1024 && i < units.length - 1) {
 		size /= 1024
+		i++;
+	}
 	return (`${size.toFixed(decimals)} ${units[i]}`);
 }
 
@@ -38,13 +58,13 @@ function showModalProgress(status) {
 	document.getElementById("modal-progress").style.display = status ? "" : "none";
 }
 
-function pullModel(modelName) {
-	setModalTitle(`Pulling ${modelName} model`);
+function pullModel(model) {
+	setModalTitle(`Pulling ${model} model`);
 	showModal(true);
 	showModalProgress(true);
 
 	return (new Promise(async resolve => {
-		const body = JSON.stringify({ model: modelName });
+		const body = JSON.stringify({ model });
 		const response = await fetch("/ollama/api/pull", { method: "POST", body });
 		const reader = response.body.getReader();
 		const decoder = new TextDecoder();
@@ -98,18 +118,69 @@ function getModelName() {
 	return (modelName);
 }
 
-async function generate() {
-	const prompt = document.getElementById("prompt").value;
+let scrollHeight = 0;
+
+function scrollConversation() {
+	const conversation = document.getElementById("conversation");
+	if (conversation.scrollHeight === scrollHeight)
+		return ;
+	scrollHeight = conversation.scrollHeight;
+	conversation.scrollTop = scrollHeight;
+}
+
+let context = [];
+let generating = false;
+
+async function generate(model, prompt) {
+	generating = true;
+
+	const responseElem = document.createElement("div")
+	responseElem.className = "response";
+	document.getElementById("conversation").appendChild(responseElem);
+
+	const body = JSON.stringify({ model, prompt, context });
+	const response = await fetch("/ollama/api/generate", { method: "POST", body });
+	const reader = response.body.getReader();
+	const decoder = new TextDecoder();
+
+	while (true) {
+		const { done, value } = await reader.read();
+		if (done)
+			break ;
+
+		const datas = decoder.decode(value, { stream: true })
+			.trim()
+			.split('\n')
+			.filter(line => line)
+			.map(line => JSON.parse(line));
+
+		for (const data of datas) {
+			responseElem.innerText += data.response || "";
+			scrollConversation();
+			if (data.context)
+				context = data.context;
+		}
+	}
+
+	generating = false;
+}
+
+async function send() {
+	if (generating)
+		return ;
+
+	const prompt = getPromptValue();
 	if (!prompt)
 		return ;
 
-	const modelName = getModelName();
-	if (!(await checkModel(modelName)))
+	const model = getModelName();
+	if (!(await checkModel(model)))
 		return ;
-	console.log("Great")
+
+	generate(model, prompt);
 }
 
 document.getElementById("send-button").addEventListener("click", event => {
 	event.preventDefault();
-	generate();
+	send();
 })

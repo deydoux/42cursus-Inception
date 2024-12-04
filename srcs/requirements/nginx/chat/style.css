@@ -21,7 +21,7 @@ button, input, textarea {
 
 main {
 	height: 100vh;
-	max-width: 960px;
+	width: 960px;
 	display: flex;
 	flex-direction: column;
 }
@@ -69,6 +69,8 @@ nav {
 }
 
 .response {
+	width: 100%;
+	box-sizing: border-box;
 	padding: 0 32px;
 }
 
