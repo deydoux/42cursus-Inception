@@ -143,6 +143,8 @@ async function generate(model, prompt) {
 	const reader = response.body.getReader();
 	const decoder = new TextDecoder();
 
+	let innerText = "";
+
 	while (true) {
 		const { done, value } = await reader.read();
 		if (done)
@@ -155,7 +157,8 @@ async function generate(model, prompt) {
 			.map(line => JSON.parse(line));
 
 		for (const data of datas) {
-			responseElem.innerText += data.response || "";
+			innerText += data.response || "";
+			responseElem.innerText = innerText;
 			scrollConversation();
 			if (data.context)
 				context = data.context;
