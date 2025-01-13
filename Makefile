@@ -21,6 +21,12 @@ all: $(NAME)
 $(NAME): $(DATA_DIRS) $(SECRETS)
 	$(COMPOSE) up --build
 
+up:
+	$(COMPOSE) up --build -d
+
+down:
+	$(COMPOSE) down
+
 $(DATA)/%:
 	$(MKDIR) $@
 
@@ -53,4 +59,4 @@ clean: $(DATA_DIRS) $(SECRETS)/initfile.sql $(SECRETS)/password_wordpress_deydou
 
 re: clean all
 
-.PHONY: all $(NAME) clean re
+.PHONY: all $(NAME) up down clean re
