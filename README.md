@@ -28,7 +28,7 @@ This project focuses on system administration using Docker, requiring students t
 
 | ![Inception Chat](https://github.com/user-attachments/assets/12df4bc5-1d87-4c20-a235-24b553d3878f) | ![Adminer](https://github.com/user-attachments/assets/6d9541a2-6e86-463e-86ce-42657be62655) |
 | - | - |
-| *Inception Chat* | *Adminer* |
+| <p align="center"><em>Inception Chat</em></p> | <p align="center"><em>Adminer</em></p> |
 
 ### Skills Learned
 - Docker and container orchestration
