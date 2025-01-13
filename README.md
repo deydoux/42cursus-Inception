@@ -13,7 +13,7 @@ This project focuses on system administration using Docker, requiring students t
 - Set up three Docker containers that run NGINX, WordPress, and MariaDB
 - Configure containers to restart on failure
 - Use Docker volumes for the WordPress database and website files
-- Set up a docker-network to establish connection between containers
+- Set up a Docker network to establish connection between containers
 - Use environment variables through .env file
 - Configure NGINX with TLS 1.2 or TLS 1.3
 - Set up WordPress with php-fpm
@@ -40,3 +40,20 @@ This project focuses on system administration using Docker, requiring students t
 - Service configuration
 - Docker Compose
 - Virtual machine management
+
+## Getting started
+### Requirements
+- [Docker](https://docs.docker.com/get-started/get-docker/)
+- OpenSSL
+
+### Start
+```bash
+make    # Start attached
+make up # Start detached
+```
+
+### Stop
+```bash
+make down
+make clean
+```
