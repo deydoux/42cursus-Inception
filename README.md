@@ -73,7 +73,7 @@ make down
 make clean # Remove images and volumes
 ```
 
-## Credits
+## References
 <img align="right" src="https://github.com/user-attachments/assets/3c1a2901-1547-41d0-b036-70b243528299">
 
 - [42](https://42.fr/)
